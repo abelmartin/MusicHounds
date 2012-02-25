@@ -9,10 +9,35 @@
     #header
       %h1 Music Hounds
       #notifcations
+        spotify:app:musichounds
     #content
-    #stage
+      #stage
+        #CreateGame
+          %h2 Create New Game
+          .new_game_param
+            %label Year
+            %select#ngpYear
+              %option{:value => 0} Any
+          .new_game_param
+            %label Artist
+            %input#ngpArtist{:type => "text", :placeholder => "Any"}
+          .new_game_param
+            %label Dancibility
+            / I'll be padding this by '5' on both sides when the API is called
+            %input#ngpDance{:type => "range", :min => "5", :max => "95"}
+          .new_game_param
+            %label Hotness
+            / I'll be padding this by '5' on both sides when the API is called
+            %input#ngpHotness{:type => "range", :min => "5", :max => "95"}
+          %button#btnCreateGame{:class => "new-button"} Create New Game
+    #footer
+      #powered
+        Powered by EchoNest, Pusher & Spotify
+      #creator
+        Created by Abel Martin from Jingle Punks
 
-
+    %script#TMPCreateGame{:type => "text/x-jquery-tmpl"}
+      
     / -- [0] Required libraries
     %script{:src=>"sp:/js/req/jquery-1.7.1.min.js"}
     %script{:src=>"sp:/js/req/underscore-1.3.1.min.js"}
@@ -22,6 +47,12 @@
 
     / -- [1] API Keys
     %script{:src=>"sp:/js/app/api_keys.js"}
+
+    / -- [2] Models
+    / -- [3] Collections
+    / -- [4] Views
+    / -- [5] Writers
+
 
     :javascript 
       // Enable pusher logging - don't include this in production

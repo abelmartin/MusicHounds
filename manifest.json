@@ -2,9 +2,9 @@
   "AcceptedLinkTypes" : "track"
   "AppDescription" : "Music Hound is a real time game played with your friends.",
   "AppIcon" : [
-    "36x18": "",
-    "64x64": "",
-    "128x128" ""
+    "18x18" : "18x18.png",
+    "64x64" : "64x64.png",
+    "128x128" : "128x128.png"
   ],
   "AppName" : "MusicHound",
   "BundleIdentifier" : "musichound",
