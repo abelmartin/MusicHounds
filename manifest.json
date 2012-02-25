@@ -1,0 +1,19 @@
+{
+  "AcceptedLinkTypes" : "track"
+  "AppDescription" : "Music Hound is a real time game played with your friends.",
+  "AppIcon" : [
+    "36x18": "",
+    "64x64": "",
+    "128x128" ""
+  ],
+  "AppName" : "MusicHound",
+  "BundleIdentifier" : "musichound",
+  "BundleType" : "Application",
+  "BundleVersion" : "1.0.0",
+  "RequiredInterface" : "1",
+  "SupportedLanguages" : ["en"],
+  "RequiredPermissions" : [
+    "http://*.pusher.com"
+  ],
+  "VendorIdentifier" : "com.jinglepunks"
+}
