@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <head>
   <title>Pusher Test</title>
-  <script src="sp:musichound/js/jquery-1.7.1.min.js" type="text/javascript"></script>
-  <script src="sp:musichound/js/pusher-1.11.min.js" type="text/javascript"></script>
+  <script src="sp:/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+  <script src="sp:/js/pusher-1.11.min.js" type="text/javascript"></script>
   <script type="text/javascript">
     // Enable pusher logging - don't include this in production
     Pusher.log = function(message) {
@@ -19,11 +19,15 @@
       $("#display").html(data);
     });
 
-    $("#display").html("jQuery Loaded!");
   </script>
 </head>
 <body>
   <h1>Data will be pushed below</h1> 
   <div id='display'>
   </div>  
+<script type="text/javascript">
+  (function(){
+    $("#display").html("jQuery Loaded!");
+  })();
+</script>
 </body>
