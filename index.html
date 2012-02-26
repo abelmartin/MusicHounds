@@ -15,6 +15,9 @@
     </div>
     <div id='content'>
       <div id='stage'>
+        <div id='CreateUser'>
+          <button class='new-button' id='btnCreateUser'>Create New User</button>
+        </div>
         <div id='CreateGame'>
           <h2>Create New Game</h2>
           <div class='new_game_param'>
@@ -64,23 +67,58 @@
     <!-- -- [5] Writers -->
     <script type='text/javascript'>
       //<![CDATA[
-        // Enable pusher logging - don't include this in production
-        Pusher.log = function(message) {
-          if (window.console && window.console.log) window.console.log(message);
-        };
+        $(function(){
+          // Enable pusher logging - don't include this in production
+          Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+          };
         
-        // Flash fallback logging - don't include this in production
-        //WEB_SOCKET_DEBUG = true;
+          // Flash fallback logging - don't include this in production
+          //WEB_SOCKET_DEBUG = true;
         
-        var pusher = new Pusher('f741395dd9ac3fcd542b');
-        var channel = pusher.subscribe('test_channel');
-        channel.bind('my_event', function(data) {
-          <!--alert(data);-->
-          $("#notifcations").html(data);
+          var pusher = new Pusher('f741395dd9ac3fcd542b');
+          var channel = pusher.subscribe('test_channel');
+          channel.bind('my_event', function(data) {
+            <!--alert(data);-->
+            $("#notifcations").html(data);
+          });
+        
+          var sp = getSpotifyApi(1);
+          var sp_models = sp.require('sp://import/scripts/api/models');
+          if (localStorage.getItem("user_guid") == null){
+            localStorage.setItem( "user_guid", guid() );
+          }
+        
+          var u_guid = localStorage.getItem("user_guid");
+          $("#notifcations").html( u_guid );
+        
+          $("#btnCreateUser").click( createUser );
+        
         });
-        (function(){
-          $("#notifcations").html("jQuery Loaded!");
-        })();
+        
+        //I got the GUID code from StackOverflow
+        //http://stackoverflow.com/questions/7940616/what-makes-this-pseudo-guid-generator-better-than-math-random
+        function S4() {
+           return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        }
+        
+        function guid() {
+           return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+        }
+        
+        function createUser(){
+          alert("within createUser call");
+          var u_guid = localStorage.getItem("user_guid");
+          $.ajax({
+            // url: "http://amartin.local:3000/users/create",
+            url: "http://mhbackend.heroku.com:3000/users",
+            data: {
+              user: {guid: u_guid}
+            },
+            type: "POST",
+            success: function(){ alert("we got back data"); }
+          });
+        }
       //]]>
     </script>
   </body>
