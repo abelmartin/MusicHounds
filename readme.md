@@ -1,11 +1,16 @@
-h1. Requirements
+# Requirements
 
 1. Cloning this repo to the right location
 2. A preview build of Spotify
 
-h2. Clone into the right location
+## Clone into the right location
 
-h2. Preview Build
+Mac & Windows machines have to pull the repo into different places.
+
+Follow the guidlines laid out here:
+http://developer.spotify.com/download/spotify-apps-api/guidelines/
+
+## Preview Build
 
 Since the last time I checked (2/25/12), this project REQUIRES the PREVIEW build of Spotify.
 
