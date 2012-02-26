@@ -91,6 +91,7 @@
       #PlayGame.capsule
         %ul#Players.capsule
           %li#player_3.current_player 
+            %button#LeaveRoom.new-button{:value => 'leave'} Leave Room
             .name player_x4f23
             .points.message 10
           %li#player_1 
@@ -115,12 +116,14 @@
               %h3 Clue 2:
               .message Everybody spread the word We're gonna have a celebration All across the world In every nation It's time for the good times
           
+          #AnswerSpace
+            %h3 The answer is...
+            .message
           #ActionButtons
             %button#btnGotIt.new-button{:value => "yes"} I Got It!!
             %button#btnNoIdea.new-button{:value => "no"} No Idea
         %br{:style=>"clear:both;"}/
 
-            
     #Footer
       #Powered
         Powered by EchoNest, Pusher, LyricFind & Spotify

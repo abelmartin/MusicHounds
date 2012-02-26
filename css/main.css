@@ -5,6 +5,7 @@ body{
 }
 
 #ActionButtons{
+  clear:both;
   margin-top: 10px;
   border-top: solid 3px #505050;
   padding-top: 25px;
@@ -17,16 +18,13 @@ body{
   padding:20px;
 }
 
+#AnswerSpace{
+  border-top: solid 2px #505050;
+  padding-top: 10px;
+  clear:both;
+}
+
 #btnGotIt{margin-right: 100px;}
-
-#PlayGame .message{
-  margin-left: 15px;
-}
-
-#Players li{
-  padding:5px 0px;
-  border-top:solid 1px #505050;
-}
 
 #Content{
   margin: 0px auto 20px;
@@ -91,8 +89,22 @@ body{
   text-align: left;
 }
 
+#PlayGame .message{
+  margin-left: 15px;
+}
+
 #Players{
   float:right;
+  margin-bottom: 20px;
+}
+
+#Players li{
+  padding:5px 0px;
+  border-top:solid 1px #505050;
+}
+
+#Players li.current_player{
+  border-top: none; 
 }
 
 h1{
@@ -132,12 +144,18 @@ label{
 }
 
 .current_player{
-  border-top: none; 
   font-weight: bold;  
   font-size: 14px;
 }
 
+#LeaveRoom{
+  margin-bottom: 10px;
+}
 
 #Homepage{
-  display:none;
+  /*display:none;*/
+}
+
+#PlayGame{
+display:none;
 }
