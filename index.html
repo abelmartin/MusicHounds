@@ -2,20 +2,60 @@
 <html xmlns='http://www.w3.org/1999/xhtml'>
   <head>
     <title>Music Hounds</title>
-    <link href='sp://import/css/eve.css' rel='stylesheet' />
+    <link href='sp://import/css/adam.css' rel='stylesheet' />
     <link href='sp://import/css/shared.css' rel='stylesheet' />
     <link href='sp://import/css/api.css' rel='stylesheet' />
+    <link href='sp:/css/main.css' rel='stylesheet' />
   </head>
   <body>
-    <div id='header'>
-      <h1>Music Hounds</h1>
-      <div id='notifcations'>
+    <div id='Header'>
+      <div id='Notifcations'>
         <!-- spotify:app:musichounds -->
       </div>
+      <img id='Logo' src='sp:/images/logo.png' />
+      <h1>Music Hounds</h1>
     </div>
-    <div id='content'>
-      <div id='stage'>
-        <div id='CreateGame'>
+    <div id='Content'>
+      <div id='Homepage'>
+        <div class='capsule' id='JoinGame'>
+          <h2>Join a Game</h2>
+          <table id='LobbyGameTable'>
+            <tr>
+              <td>Room Name</td>
+              <td>Artist / Genre</td>
+              <td>
+                Current
+                <br />
+                Round
+              </td>
+              <td>
+                High
+                <br />
+                Score
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>The best room ever!</td>
+              <td>A: Madonna</td>
+              <td>1</td>
+              <td>0</td>
+              <td>
+                <a href='#1'>Join</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Hot like Fiya!</td>
+              <td>G: Hip Hop</td>
+              <td>1</td>
+              <td>0</td>
+              <td>
+                <a href='#1'>Join</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class='capsule' id='CreateGame'>
           <h2>Create New Game</h2>
           <div class='new_game_param'>
             <label>Style</label>
@@ -33,6 +73,9 @@
               <option value='ska'>Aka</option>
               <option value='soul'>Soul</option>
             </select>
+          </div>
+          <div class='new_game_param separator'>
+            - OR -
           </div>
           <div class='new_game_param'>
             <label>Artist</label>
@@ -59,44 +102,56 @@
           </div>
           <button class='new-button' id='btnCreateGame'>Create New Game</button>
         </div>
-        <div id='JoinGame'>
-          <table id='LobbyGameTable'>
-            <tr>
-              <td>Room Name</td>
-              <td>Artist / Genre</td>
-              <td>
-                Current
-                <br />
-                Round
-              </td>
-              <td>
-                High
-                <br />
-                Score
-              </td>
-            </tr>
-            <tr>
-              <td>The best room ever!</td>
-              <td>A: Madonna</td>
-              <td>1</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>Hot like Fiya!</td>
-              <td>G: Hip Hop</td>
-              <td>1</td>
-              <td>0</td>
-            </tr>
-          </table>
+        <br style='clear:both;' />
+      </div>
+      <div class='capsule' id='PlayGame'>
+        <ul class='capsule' id='Players'>
+          <li class='current_player' id='player_3'>
+            <div class='name'>player_x4f23</div>
+            <div class='points message'>10</div>
+          </li>
+          <li id='player_1'>
+            <div class='name'>player_x4f23</div>
+            <div class='points message'>3</div>
+          </li>
+          <li id='player_2'>
+            <div class='name'>player_x4f23</div>
+            <div class='points message'>-2</div>
+          </li>
+        </ul>
+        <div id='GameBoard'>
+          <div id='GoalScore'>
+            <h3>Goal Score</h3>
+            <div class='message'>20</div>
+          </div>
+          <div id='CurrentRound'>
+            <h3>Current Round</h3>
+            <div class='message'>1</div>
+          </div>
+          <div id='ClueStage'>
+            <div id='Clue1'>
+              <h3>Clue 1:</h3>
+              <div class='message'>And bring back all of those happy days Put your trouble down It's time to celebrate Let love shine And we will find</div>
+            </div>
+            <div id='Clue2'>
+              <h3>Clue 2:</h3>
+              <div class='message'>Everybody spread the word We're gonna have a celebration All across the world In every nation It's time for the good times</div>
+            </div>
+          </div>
+          <div id='ActionButtons'>
+            <button class='new-button' id='btnGotIt' value='yes'>Got It!!</button>
+            <button class='new-button' id='btnNoIdea' value='no'>No Idea</button>
+          </div>
         </div>
+        <br style='clear:both;' />
       </div>
     </div>
-    <div id='footer'>
-      <div id='powered'>
-        Powered by EchoNest, Pusher & Spotify
+    <div id='Footer'>
+      <div id='Powered'>
+        Powered by EchoNest, Pusher, LyricFind & Spotify
       </div>
-      <div id='creator'>
-        Created by Abel Martin from Jingle Punks
+      <div id='Creator'>
+        Created by Abel Martin
       </div>
     </div>
     <script id='TMPCreateGame' type='text/x-jquery-tmpl'></script>
@@ -114,6 +169,8 @@
     <!-- -- [5] Writers -->
     <script type='text/javascript'>
       //<![CDATA[
+        var gblSpotifyModels;
+        var gblCurrentTrack;
         $(function(){
           // Enable pusher logging - don't include this in production
           Pusher.log = function(message) {
@@ -126,12 +183,33 @@
           var pusher = new Pusher('f741395dd9ac3fcd542b');
           var channel = pusher.subscribe('test_channel');
           channel.bind('my_event', function(data) {
-            <!--alert(data);-->
-            $("#notifcations").html(data);
+            $("#Notifcations").html(data);
           });
         
           var sp = getSpotifyApi(1);
-          var sp_models = sp.require('sp://import/scripts/api/models');
+          gblSpotifyModels = sp.require('sp://import/scripts/api/models');
+        
+          if( gblSpotifyModels.player.playing ){
+            gblCurrentTrack = gblSpotifyModels.player.track;
+          }
+        
+          gblSpotifyModels.player.observe(gblSpotifyModels.EVENT.CHANGE, function(event) {
+            if( gblSpotifyModels.player.playing ){
+              console.log("1");
+              gblCurrentTrack = gblSpotifyModels.player.track;
+              console.log("2");
+              var lbl_track = gblCurrentTrack.data.name + " - " + gblCurrentTrack.data.artists[0].name;
+              console.log("3");
+              $("#Notifcations").html(lbl_track);
+            }
+            /*else{
+              $("#Notifcations").html("");
+            }*/
+        
+            console.log("We should have updated the notification");
+          });
+        
+        
           if (localStorage.getItem("user_guid") == null){
             localStorage.setItem( "user_guid", guid() );
           }

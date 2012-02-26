@@ -2,17 +2,49 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %title Music Hounds
-    %link{:href => "sp://import/css/eve.css", :rel => "stylesheet"}/
+    %link{:href => "sp://import/css/adam.css", :rel => "stylesheet"}/
     %link{:href => "sp://import/css/shared.css", :rel => "stylesheet"}/
     %link{:href => "sp://import/css/api.css", :rel => "stylesheet"}/
+    %link{:href => "sp:/css/main.css", :rel => "stylesheet"}
   %body
-    #header
-      %h1 Music Hounds
-      #notifcations
+    #Header
+      #Notifcations
         / spotify:app:musichounds
-    #content
-      #stage
-        #CreateGame
+      %img#Logo{:src => "sp:/images/logo.png"}
+      %h1 Music Hounds
+    #Content
+      #Homepage
+        #JoinGame.capsule
+          %h2 Join a Game
+          %table#LobbyGameTable
+            %tr
+              %td Room Name
+              %td Artist / Genre
+              %td 
+                Current 
+                %br/
+                Round
+              %td 
+                High 
+                %br/
+                Score
+              %td
+            %tr
+              %td The best room ever! 
+              %td A: Madonna
+              %td 1
+              %td 0
+              %td
+                %a{:href => "#1"} Join
+            %tr
+              %td Hot like Fiya! 
+              %td G: Hip Hop
+              %td 1
+              %td 0
+              %td
+                %a{:href => "#1"} Join
+
+        #CreateGame.capsule
           %h2 Create New Game
           .new_game_param
             %label Style
@@ -29,6 +61,9 @@
               %option{:value => 'rock'} Rock
               %option{:value => 'ska'} Aka
               %option{:value => 'soul'} Soul
+          .new_game_param.separator
+            ="- OR -"
+
           .new_game_param
             %label Artist
             %select#ngpStyle
@@ -51,38 +86,46 @@
               %option{:value => 'Whitney Houston'} Whitney Houston
               %option{:value => 'Young Jezzy'} Young Jezzy
           %button#btnCreateGame{:class => "new-button"} Create New Game
-        #JoinGame
-          %table#LobbyGameTable
-            %tr
-              %td Room Name
-              %td Artist / Genre
-              %td 
-                Current 
-                %br/
-                Round
-              %td 
-                High 
-                %br/
-                Score
-            %tr
-              %td The best room ever! 
-              %td A: Madonna
-              %td 1
-              %td 0
-            %tr
-              %td Hot like Fiya! 
-              %td G: Hip Hop
-              %td 1
-              %td 0
+        %br{:style=>"clear:both;"}/
 
-
+      #PlayGame.capsule
+        %ul#Players.capsule
+          %li#player_3.current_player 
+            .name player_x4f23
+            .points.message 10
+          %li#player_1 
+            .name player_x4f23
+            .points.message 3
+          %li#player_2 
+            .name player_x4f23
+            .points.message -2
+        #GameBoard
+          #GoalScore
+            %h3 Goal Score
+            .message 20
+             
+          #CurrentRound
+            %h3 Current Round
+            .message 1
+          #ClueStage
+            #Clue1
+              %h3 Clue 1:
+              .message And bring back all of those happy days Put your trouble down It's time to celebrate Let love shine And we will find
+            #Clue2
+              %h3 Clue 2:
+              .message Everybody spread the word We're gonna have a celebration All across the world In every nation It's time for the good times
+          
+          #ActionButtons
+            %button#btnGotIt.new-button{:value => "yes"} I Got It!!
+            %button#btnNoIdea.new-button{:value => "no"} No Idea
+        %br{:style=>"clear:both;"}/
 
             
-    #footer
-      #powered
-        Powered by EchoNest, Pusher & Spotify
-      #creator
-        Created by Abel Martin from Jingle Punks
+    #Footer
+      #Powered
+        Powered by EchoNest, Pusher, LyricFind & Spotify
+      #Creator
+        Created by Abel Martin
 
     %script#TMPCreateGame{:type => "text/x-jquery-tmpl"}
       
@@ -103,6 +146,8 @@
 
 
     :javascript 
+      var gblSpotifyModels;
+      var gblCurrentTrack;
       $(function(){
         // Enable pusher logging - don't include this in production
         Pusher.log = function(message) {
@@ -115,12 +160,33 @@
         var pusher = new Pusher('f741395dd9ac3fcd542b');
         var channel = pusher.subscribe('test_channel');
         channel.bind('my_event', function(data) {
-          <!--alert(data);-->
-          $("#notifcations").html(data);
+          $("#Notifcations").html(data);
         });
 
         var sp = getSpotifyApi(1);
-        var sp_models = sp.require('sp://import/scripts/api/models');
+        gblSpotifyModels = sp.require('sp://import/scripts/api/models');
+
+        if( gblSpotifyModels.player.playing ){
+          gblCurrentTrack = gblSpotifyModels.player.track;
+        }
+
+        gblSpotifyModels.player.observe(gblSpotifyModels.EVENT.CHANGE, function(event) {
+          if( gblSpotifyModels.player.playing ){
+            console.log("1");
+            gblCurrentTrack = gblSpotifyModels.player.track;
+            console.log("2");
+            var lbl_track = gblCurrentTrack.data.name + " - " + gblCurrentTrack.data.artists[0].name;
+            console.log("3");
+            $("#Notifcations").html(lbl_track);
+          }
+          /*else{
+            $("#Notifcations").html("");
+          }*/
+
+          console.log("We should have updated the notification");
+        });
+
+
         if (localStorage.getItem("user_guid") == null){
           localStorage.setItem( "user_guid", guid() );
         }

@@ -1,0 +1,143 @@
+body{
+  /*background: url('sp:/images/background.png'), repeat-x, repeat-y;*/
+  height: 100%;
+  text-align: center;
+}
+
+#ActionButtons{
+  margin-top: 10px;
+  border-top: solid 3px #505050;
+  padding-top: 25px;
+  text-align: center;
+}
+
+#ActionButtons button{
+  font-size:30px;
+  font-weight: bolder;
+  padding:20px;
+}
+
+#btnGotIt{margin-right: 100px;}
+
+#PlayGame .message{
+  margin-left: 15px;
+}
+
+#Players li{
+  padding:5px 0px;
+  border-top:solid 1px #505050;
+}
+
+#Content{
+  margin: 0px auto 20px;
+  padding-top: 20px;
+  width:960px;
+}
+
+#CreateGame{
+  float:left;
+  margin-left:120px;
+  width:320px;
+}
+
+#Footer{
+  clear:both;
+  height:60px;
+  text-align: center;
+  width:100%;
+}
+
+#Header{
+  /*dark: 008009, light: 00ff12*/
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#00ff12), to(#008009));
+  border-bottom:2px solid #444;
+  height:60px;
+  text-align: left;
+}
+
+#Homepage{
+  text-align: left;
+}
+
+#JoinGame{
+  float:right;
+  margin-right:120px;
+  width:320px;
+}
+
+#JoinGame a{
+  font-weight:bold;
+  color: #008009;
+}
+
+#JoinGame a:hover{
+  color: #00ff12;
+}
+
+
+#Logo{
+  display:block;
+  float:left;
+}
+
+#Notifcations{
+  color:black;
+  float:right;
+  margin-right: 50px;
+  padding-top: 20px;
+}
+
+#PlayGame{
+  text-align: left;
+}
+
+#Players{
+  float:right;
+}
+
+h1{
+  color: #000;
+  font-family: "Georgia";
+  font-size: 48px;
+  font-weight: bolder;
+  margin-left: 65px;
+  padding-top: 20px;
+  width:100%;
+}
+
+h2{
+  font-size: 25px;
+  padding-bottom: 10px;
+}
+
+label{
+  display: inline-block;
+  font-weight: bold;
+  width:100px;
+}
+
+.new_game_param{
+  padding-bottom: 15px;
+}
+
+.new_game_param.separator{
+  text-align: center;
+}
+
+.capsule{
+  background-color:#404040;
+  border:solid 1px #505050;
+  padding:10px;
+  -webkit-border-radius: 10px;
+}
+
+.current_player{
+  border-top: none; 
+  font-weight: bold;  
+  font-size: 14px;
+}
+
+
+#Homepage{
+  display:none;
+}
