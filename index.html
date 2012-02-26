@@ -10,37 +10,81 @@
     <div id='header'>
       <h1>Music Hounds</h1>
       <div id='notifcations'>
-        spotify:app:musichounds
+        <!-- spotify:app:musichounds -->
       </div>
     </div>
     <div id='content'>
       <div id='stage'>
-        <div id='CreateUser'>
-          <button class='new-button' id='btnCreateUser'>Create New User</button>
-        </div>
         <div id='CreateGame'>
           <h2>Create New Game</h2>
           <div class='new_game_param'>
-            <label>Year</label>
-            <select id='ngpYear'>
-              <option value='0'>Any</option>
+            <label>Styel</label>
+            <select id='ngpStyle'>
+              <option value=''>Any</option>
+              <option value='bluegrass'>Bluegrass</option>
+              <option value='country'>Country</option>
+              <option value='dance'>Dance</option>
+              <option value='grunge'>Grunge</option>
+              <option value='old school'>Old School</option>
+              <option value='pop'>Pop</option>
+              <option value='punk'>Punk</option>
+              <option value='r&amp;b'>R&B</option>
+              <option value='rock'>Rock</option>
+              <option value='ska'>Aka</option>
+              <option value='soul'>Soul</option>
             </select>
           </div>
           <div class='new_game_param'>
             <label>Artist</label>
-            <input id='ngpArtist' placeholder='Any' type='text' />
-          </div>
-          <div class='new_game_param'>
-            <label>Dancibility</label>
-            <!-- I'll be padding this by '5' on both sides when the API is called -->
-            <input id='ngpDance' max='95' min='5' type='range' />
-          </div>
-          <div class='new_game_param'>
-            <label>Hotness</label>
-            <!-- I'll be padding this by '5' on both sides when the API is called -->
-            <input id='ngpHotness' max='95' min='5' type='range' />
+            <select id='ngpStyle'>
+              <option value=''>Any</option>
+              <option value='Kylie Minogue'>Kylie Minogue</option>
+              <option value='Madonna'>Madonna</option>
+              <option value='Lil Wayne'>Lil' Wayne</option>
+              <option value='Drake'>Drake</option>
+              <option value='Young Jezzy'>Young Jezzy</option>
+              <option value='Tribe Called Quest'>A Tribe Called Quest</option>
+              <option value='Rihanna'>Rihanna</option>
+              <option value='Billy Joel'>Billy Joel</option>
+              <option value='Bon Jovi'>Bon Jovi</option>
+              <option value='Adele'>Adele</option>
+              <option value='Whitney Houston'>Whitney Houston</option>
+              <option value='Kelly Clarkson'>Kelly Clarkson</option>
+              <option value='Nicki Minaj'>Nicki Minaj</option>
+              <option value=''>Any</option>
+            </select>
           </div>
           <button class='new-button' id='btnCreateGame'>Create New Game</button>
+        </div>
+        <div id='JoinGame'>
+          <table id='LobbyGameTable'>
+            <tr>
+              <td>Room Name</td>
+              <td>Artist / Genre</td>
+              <td>
+                Current
+                <br />
+                Round
+              </td>
+              <td>
+                High
+                <br />
+                Score
+              </td>
+            </tr>
+            <tr>
+              <td>The best room ever!</td>
+              <td>A: Madonna</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Hot like Fiya!</td>
+              <td>G: Hip Hop</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -90,10 +134,8 @@
           }
         
           var u_guid = localStorage.getItem("user_guid");
-          $("#notifcations").html( u_guid );
-        
+          console.log( u_guid );
           $("#btnCreateUser").click( createUser );
-        
         });
         
         //I got the GUID code from StackOverflow
@@ -106,15 +148,17 @@
            return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
         }
         
+        //This really has no business being here, but I need it for testing. 
         function createUser(){
           alert("within createUser call");
           var u_guid = localStorage.getItem("user_guid");
+          var player_name = "player" + u_guid.split('-')[0];
           $.ajax({
-            // url: "http://amartin.local:3000/users/create",
-            url: "http://mhbackend.heroku.com:3000/users",
+            url: "http://mhbackend.heroku.com:3000/users.js",
             data: {
-              user: {guid: u_guid}
+              user: {guid: u_guid, name: player_name}
             },
+            dataType: "json",
             type: "POST",
             success: function(){ alert("we got back data"); }
           });

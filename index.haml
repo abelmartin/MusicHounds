@@ -9,29 +9,72 @@
     #header
       %h1 Music Hounds
       #notifcations
-        spotify:app:musichounds
+        / spotify:app:musichounds
     #content
       #stage
-        #CreateUser
-          %button#btnCreateUser{:class => "new-button"} Create New User
         #CreateGame
           %h2 Create New Game
           .new_game_param
-            %label Year
-            %select#ngpYear
-              %option{:value => 0} Any
+            %label Styel
+            %select#ngpStyle
+              %option{:value => ''} Any
+              %option{:value => 'bluegrass'} Bluegrass
+              %option{:value => 'country'} Country
+              %option{:value => 'dance'} Dance
+              %option{:value => 'grunge'} Grunge
+              %option{:value => 'old school'} Old School
+              %option{:value => 'pop'} Pop
+              %option{:value => 'punk'} Punk
+              %option{:value => 'r&amp;b'} R&B
+              %option{:value => 'rock'} Rock
+              %option{:value => 'ska'} Aka
+              %option{:value => 'soul'} Soul
           .new_game_param
             %label Artist
-            %input#ngpArtist{:type => "text", :placeholder => "Any"}
-          .new_game_param
-            %label Dancibility
-            / I'll be padding this by '5' on both sides when the API is called
-            %input#ngpDance{:type => "range", :min => "5", :max => "95"}
-          .new_game_param
-            %label Hotness
-            / I'll be padding this by '5' on both sides when the API is called
-            %input#ngpHotness{:type => "range", :min => "5", :max => "95"}
+            %select#ngpStyle
+              %option{:value => ''} Any
+              %option{:value => 'Kylie Minogue'} Kylie Minogue
+              %option{:value => 'Madonna'} Madonna
+              %option{:value => 'Lil Wayne'} Lil' Wayne
+              %option{:value => 'Drake'} Drake
+              %option{:value => 'Young Jezzy'} Young Jezzy
+              %option{:value => 'Tribe Called Quest'} A Tribe Called Quest
+              %option{:value => 'Rihanna'} Rihanna
+              %option{:value => 'Billy Joel'} Billy Joel
+              %option{:value => 'Bon Jovi'} Bon Jovi
+              %option{:value => 'Adele'} Adele
+              %option{:value => 'Whitney Houston'} Whitney Houston
+              %option{:value => 'Kelly Clarkson'} Kelly Clarkson
+              %option{:value => 'Nicki Minaj'} Nicki Minaj
+              %option{:value => ''} Any
           %button#btnCreateGame{:class => "new-button"} Create New Game
+        #JoinGame
+          %table#LobbyGameTable
+            %tr
+              %td Room Name
+              %td Artist / Genre
+              %td 
+                Current 
+                %br/
+                Round
+              %td 
+                High 
+                %br/
+                Score
+            %tr
+              %td The best room ever! 
+              %td A: Madonna
+              %td 1
+              %td 0
+            %tr
+              %td Hot like Fiya! 
+              %td G: Hip Hop
+              %td 1
+              %td 0
+
+
+
+            
     #footer
       #powered
         Powered by EchoNest, Pusher & Spotify
@@ -80,10 +123,8 @@
         }
 
         var u_guid = localStorage.getItem("user_guid");
-        $("#notifcations").html( u_guid );
-
+        console.log( u_guid );
         $("#btnCreateUser").click( createUser );
-
       });
 
       //I got the GUID code from StackOverflow
@@ -96,15 +137,17 @@
          return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
       }
       
+      //This really has no business being here, but I need it for testing. 
       function createUser(){
         alert("within createUser call");
         var u_guid = localStorage.getItem("user_guid");
+        var player_name = "player" + u_guid.split('-')[0];
         $.ajax({
-          // url: "http://amartin.local:3000/users/create",
-          url: "http://mhbackend.heroku.com:3000/users",
+          url: "http://mhbackend.heroku.com:3000/users.js",
           data: {
-            user: {guid: u_guid}
+            user: {guid: u_guid, name: player_name}
           },
+          dataType: "json",
           type: "POST",
           success: function(){ alert("we got back data"); }
         });
